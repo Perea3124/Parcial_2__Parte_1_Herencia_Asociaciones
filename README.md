@@ -82,3 +82,10 @@ python -m unittest -v tests.test_factura_cliente
 - Diagramas UML: `evidencias/diagrama_UML_clases.png`, `evidencias/diagrama_componentes.png`.
 - Capturas de apoyo: `evidencias/screenshot_project_structure.png`, `evidencias/screenshot_tests_terminal.png`, `evidencias/screenshot_debugger.png`.
 - Registro opcional de pruebas: `tests_output.txt`.
+
+## Autoría
+Autor(es): David Quintero Perea 
+Correo: d.quintero4@utp.edu.co  
+Docente: Alejandro Rodas Vásquez  
+Universidad Tecnológica de Pereira  
+Fecha de entrega: 2025-11-02
