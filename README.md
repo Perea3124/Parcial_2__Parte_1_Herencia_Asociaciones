@@ -84,7 +84,7 @@ python -m unittest -v tests.test_factura_cliente
 - Registro opcional de pruebas: `tests_output.txt`.
 
 ## Autoría
-Autor(es): David Quintero Perea 
+Autor: David Quintero Perea  
 Correo: d.quintero4@utp.edu.co  
 Docente: Alejandro Rodas Vásquez  
 Universidad Tecnológica de Pereira  
