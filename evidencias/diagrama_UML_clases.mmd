@@ -1,0 +1,57 @@
+classDiagram
+    class Producto {
+        +nombre: str
+        +precio: float
+    }
+
+    class ProductoControl {
+        +codigo_ica: str
+        +frecuencia_aplicacion_dias: int
+    }
+
+    class ControlPlagas {
+        +periodo_carencia_dias: int
+    }
+
+    class Fertilizante {
+        +fecha_ultima_aplicacion: date|None
+    }
+
+    class Antibiotico {
+        +nombre: str
+        +precio: float
+        +dosis_mg_por_kg: int
+        +tipo_animal: TipoAnimal
+    }
+
+    class TipoAnimal {
+        <<Enum>>
+        BOVINO
+        CAPRINO
+        PORCINO
+    }
+
+    class Cliente {
+        +nombre: str
+        +cedula: str
+        +facturas: List[Factura]
+    }
+
+    class Factura {
+        +fecha: date
+        +productos: List[Any]
+    }
+
+    class LineaFactura {
+        +producto: Any
+        +cantidad: int
+    }
+
+    Producto <|-- ProductoControl
+    ProductoControl <|-- ControlPlagas
+    ProductoControl <|-- Fertilizante
+    Antibiotico --> TipoAnimal
+    Cliente "1" --> "*" Factura : facturas
+    Factura "1" o-- "*" LineaFactura : productos
+    LineaFactura "*" --> "1" Producto : producto
+    Factura "*" --> "*" Producto : productos (alternativo)

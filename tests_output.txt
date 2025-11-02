@@ -1,0 +1,19 @@
+test_antibiotico_dosis_fuera_rango (test_antibiotico.TestAntibiotico.test_antibiotico_dosis_fuera_rango) ... ok
+test_antibiotico_nombre_vacio (test_antibiotico.TestAntibiotico.test_antibiotico_nombre_vacio) ... ok
+test_antibiotico_tipo_invalido (test_antibiotico.TestAntibiotico.test_antibiotico_tipo_invalido) ... ok
+test_antibiotico_valido (test_antibiotico.TestAntibiotico.test_antibiotico_valido) ... ok
+test_agregar_producto (test_factura_cliente.TestFacturaCliente.test_agregar_producto) ... ok
+test_cliente_total_y_facturas_desde (test_factura_cliente.TestFacturaCliente.test_cliente_total_y_facturas_desde) ... ok
+test_factura_rechaza_producto_sin_precio (test_factura_cliente.TestFacturaCliente.test_factura_rechaza_producto_sin_precio) ... ok
+test_valor_total_con_linea_factura (test_factura_cliente.TestFacturaCliente.test_valor_total_con_linea_factura) ... ok
+test_valor_total_simple (test_factura_cliente.TestFacturaCliente.test_valor_total_simple) ... ok
+test_control_plagas_periodo_carencia (test_producto_control.TestProductosControl.test_control_plagas_periodo_carencia) ... ok
+test_crear_producto_control_valido (test_producto_control.TestProductosControl.test_crear_producto_control_valido) ... ok
+test_fertilizante_fecha (test_producto_control.TestProductosControl.test_fertilizante_fecha) ... ok
+test_fertilizante_fecha_invalida (test_producto_control.TestProductosControl.test_fertilizante_fecha_invalida) ... ok
+test_producto_control_nombre_vacio (test_producto_control.TestProductosControl.test_producto_control_nombre_vacio) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.001s
+
+OK

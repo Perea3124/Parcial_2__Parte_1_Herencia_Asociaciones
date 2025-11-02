@@ -1,0 +1,22 @@
+{
+    // Debug configurations to help run and debug unit tests
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Debug Tests (unittest)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "unittest",
+            "args": [
+                "discover",
+                "-s", "${workspaceFolder}/tests",
+                "-p", "test*.py",
+                "-v"
+            ],
+            "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

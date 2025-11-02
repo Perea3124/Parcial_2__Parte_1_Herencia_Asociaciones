@@ -1,0 +1,30 @@
+graph LR
+    subgraph modelo
+        producto["producto.py"]
+        producto_control["producto_control.py"]
+        control_plagas["control_plagas.py"]
+        fertilizante["fertilizante.py"]
+        antibiotico["antibiotico.py"]
+        factura["factura.py"]
+        cliente["cliente.py"]
+    end
+
+    subgraph tests
+        test_producto_control["test_producto_control.py"]
+        test_antibiotico["test_antibiotico.py"]
+        test_factura_cliente["test_factura_cliente.py"]
+    end
+
+    producto_control --> producto
+    control_plagas --> producto_control
+    fertilizante --> producto_control
+    factura --> producto
+    factura --> antibiotico
+    cliente --> factura
+
+    test_producto_control --> producto_control
+    test_producto_control --> control_plagas
+    test_producto_control --> fertilizante
+    test_antibiotico --> antibiotico
+    test_factura_cliente --> factura
+    test_factura_cliente --> cliente
