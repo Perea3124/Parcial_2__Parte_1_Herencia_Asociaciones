@@ -1,57 +1,77 @@
 classDiagram
     class Producto {
+        <<dataclass>>
         +nombre: str
         +precio: float
+        +__post_init__()
     }
 
     class ProductoControl {
+        <<dataclass>>
         +codigo_ica: str
         +frecuencia_aplicacion_dias: int
+        +__post_init__()
     }
 
     class ControlPlagas {
+        <<dataclass>>
         +periodo_carencia_dias: int
+        +__post_init__()
     }
 
     class Fertilizante {
-        +fecha_ultima_aplicacion: date|None
+        <<dataclass>>
+        +fecha_ultima_aplicacion: date | None
+        +__post_init__()
     }
 
     class Antibiotico {
+        <<dataclass>>
         +nombre: str
         +precio: float
         +dosis_mg_por_kg: int
         +tipo_animal: TipoAnimal
+        +__post_init__()
     }
 
     class TipoAnimal {
-        <<Enum>>
+        <<enumeration>>
         BOVINO
         CAPRINO
         PORCINO
     }
 
     class Cliente {
+        <<dataclass>>
         +nombre: str
         +cedula: str
         +facturas: List[Factura]
+        +agregar_factura(factura: Factura): None
+        +total_facturado(): float
+        +facturas_desde(desde: date): List[Factura]
     }
 
     class Factura {
+        <<dataclass>>
         +fecha: date
         +productos: List[Any]
+        +valor_total(): float
+        +agregar_producto(producto: Any): None
     }
 
     class LineaFactura {
+        <<dataclass>>
         +producto: Any
         +cantidad: int
+        +__post_init__()
     }
 
     Producto <|-- ProductoControl
     ProductoControl <|-- ControlPlagas
     ProductoControl <|-- Fertilizante
     Antibiotico --> TipoAnimal
-    Cliente "1" --> "*" Factura : facturas
+    Cliente "1" o-- "*" Factura : facturas
     Factura "1" o-- "*" LineaFactura : productos
-    LineaFactura "*" --> "1" Producto : producto
-    Factura "*" --> "*" Producto : productos (alternativo)
+    Factura ..> Producto : admite
+    Factura ..> Antibiotico : admite
+    LineaFactura --> Producto : producto (cuando aplica)

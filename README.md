@@ -1,5 +1,5 @@
 # Proyecto de Programación Orientada a Objetos
-Parcial 2 – Herencia y Relaciones
+Parcial 2 – Herencia y Asociaciones
 
 ## Contexto académico
 - Universidad Tecnológica de Pereira
@@ -7,15 +7,33 @@ Parcial 2 – Herencia y Relaciones
 - Asignatura: Programación 4
 
 ## Descripción general
-Este proyecto implementa un sistema de facturación para una tienda agrícola, aplicando principios de Programación Orientada a Objetos tales como herencia, composición y modularidad. El sistema gestiona productos de control agrícola (fertilizantes y control de plagas), antibióticos para animales y clientes con su historial de facturas. La calidad del diseño se valida mediante una batería de pruebas unitarias.
+El objetivo es modelar un flujo básico de facturación para una tienda agrícola aplicando principios de herencia, composición y validaciones orientadas a objetos. El dominio incluye productos de control agrícola (fertilizantes y controles de plagas), antibióticos veterinarios y clientes con historial de facturación. El comportamiento se garantiza con pruebas unitarias que cubren validaciones, cálculos y asociaciones entre objetos.
 
 ## Estructura del repositorio
 ```text
 .
+├── .copilotignore
+├── .git/
+├── .gitignore
 ├── .vscode/
 │   ├── launch.json
 │   └── settings.json
+├── crud/
+│   ├── __init__.py
+│   ├── operaciones.py
+│   └── __pycache__/...
+├── evidencias/
+│   ├── diagrama_componentes.mmd
+│   ├── diagrama_componentes.png
+│   ├── diagrama_UML_clases.mmd
+│   ├── diagrama_UML_clases.png
+│   ├── screenshot_debug_busqueda.png
+│   ├── screenshot_debugger.png
+│   ├── screenshot_demo_terminal.png
+│   ├── screenshot_project_structure.png
+│   └── screenshot_tests_terminal.png
 ├── modelo/
+│   ├── __init__.py
 │   ├── antibiotico.py
 │   ├── cliente.py
 │   ├── control_plagas.py
@@ -24,68 +42,63 @@ Este proyecto implementa un sistema de facturación para una tienda agrícola, a
 │   ├── linea_factura.py
 │   ├── producto.py
 │   ├── producto_control.py
-│   └── __init__.py
+│   └── __pycache__/...
 ├── tests/
 │   ├── test_antibiotico.py
+│   ├── test_crud.py
 │   ├── test_factura_cliente.py
-│   └── test_producto_control.py
-├── evidencias/
-│   ├── diagrama_UML_clases.mmd
-│   ├── diagrama_UML_clases.png
-│   ├── diagrama_componentes.mmd
-│   ├── diagrama_componentes.png
-│   ├── screenshot_project_structure.png
-│   ├── screenshot_tests_terminal.png
-│   └── screenshot_debugger.png
-├── tests_output.txt
-├── estructura.txt
-└── README.md
+│   ├── test_producto_control.py
+│   └── __pycache__/...
+├── ui/
+│   ├── __init__.py
+│   ├── cli.py
+│   └── __pycache__/...
+├── README.md
+└── tests_output.txt
 ```
 
-## Modelo de clases
-- `Producto`: clase base con nombre y precio.
-- `ProductoControl` (hereda de `Producto`): incorpora `codigo_ica` y `frecuencia_aplicacion_dias`.
-- `ControlPlagas` (hereda de `ProductoControl`): añade `periodo_carencia_dias`.
-- `Fertilizante` (hereda de `ProductoControl`): registra `fecha_ultima_aplicacion`.
-- `Antibiotico`: gestiona `dosis_mg_por_kg` y `tipo_animal`.
-- `Factura`: mantiene fecha, colecciones de `LineaFactura` y calcula `valor_total()`.
-- `Cliente`: almacena datos personales, historial de facturas y expone `total_facturado()`.
+### Núcleo del modelo (`modelo/`)
+- `Producto`: dataclass base con validaciones para nombre y precio.
+- `ProductoControl` → (`ControlPlagas`, `Fertilizante`): extienden atributos con información ICA, frecuencia y datos específicos.
+- `Antibiotico` y `TipoAnimal`: modelan medicamentos veterinarios con validación de dosis y tipo.
+- `LineaFactura`: garantiza que cualquier ítem facturable posea un `precio` y cantidad válida.
+- `Factura`: acepta `LineaFactura` o productos directos, calcula `valor_total()` y permite `agregar_producto()`.
+- `Cliente`: agrupa facturas, permite agregarlas, calcular `total_facturado()` y filtrarlas por fecha.
 
-**Relaciones clave**: herencia `Producto → ProductoControl → (ControlPlagas | Fertilizante)` y composición `Cliente → Factura → LineaFactura → Producto`.
+### Capa CRUD (`crud/operaciones.py`)
+- Maneja almacenamiento en memoria de `CLIENTES` y `FACTURAS`.
+- Expone funciones `crear_cliente`, `agregar_factura` y `buscar_por_cedula` usadas en las pruebas y la demo CLI.
 
-## Ejecución de pruebas
-Desde la raíz del proyecto:
+### Interfaz de demostración (`ui/cli.py`)
+- Ejecuta un flujo mínimo de creación de cliente, factura y búsqueda para depuración.
+- Se puede lanzar con:
+
+```powershell
+python ui/cli.py
+```
+
+## Pruebas automatizadas
+Desde la raíz del repositorio:
 
 ```powershell
 python -m unittest discover -s tests -p "test_*.py" -v
 ```
 
-Ejemplo del resultado esperado:
+La suite actual incluye 16 pruebas que cubren validaciones de antibióticos, productos de control, facturación y operaciones CRUD. El archivo `tests_output.txt` conserva la salida más reciente (codificada en UTF-16 por PowerShell); eliminarlo es opcional si se requiere una ejecución limpia.
 
-```text
-Ran 14 tests in 0.002s
-OK
-```
-
-Para ejecutar un caso en particular:
+Para un módulo en particular:
 
 ```powershell
 python -m unittest -v tests.test_factura_cliente
 ```
 
-## Depuración en VS Code
-1. Verificar la configuración de `.vscode/launch.json`.
-2. Abrir el archivo de prueba (`tests/test_factura_cliente.py`), colocar un breakpoint y ejecutar la depuración (`F5` o *Debug Test*).
-3. Inspeccionar los paneles *Variables* y *Call Stack* para analizar la herencia y la composición (ver `evidencias/screenshot_debugger.png`).
-
-## Evidencias disponibles
-- Diagramas UML: `evidencias/diagrama_UML_clases.png`, `evidencias/diagrama_componentes.png`.
-- Capturas de apoyo: `evidencias/screenshot_project_structure.png`, `evidencias/screenshot_tests_terminal.png`, `evidencias/screenshot_debugger.png`.
-- Registro opcional de pruebas: `tests_output.txt`.
+## Evidencias
+- Diagramas Mermaid y exportaciones: `evidencias/diagrama_UML_clases.mmd|.png`, `evidencias/diagrama_componentes.mmd|.png`.
+- Capturas actualizadas: `screenshot_project_structure.png`, `screenshot_tests_terminal.png`, `screenshot_debugger.png`, `screenshot_debug_busqueda.png`, `screenshot_demo_terminal.png`.
 
 ## Autoría
-Autor: David Quintero Perea  
-Correo: d.quintero4@utp.edu.co  
-Docente: Alejandro Rodas Vásquez  
-Universidad Tecnológica de Pereira  
-Fecha de entrega: 2025-11-02
+- Autor: David Quintero Perea
+- Correo: d.quintero4@utp.edu.co
+- Docente: Alejandro Rodas Vásquez
+- Universidad Tecnológica de Pereira
+- Última actualización: 2025-11-07

@@ -7,12 +7,22 @@ graph LR
         antibiotico["antibiotico.py"]
         factura["factura.py"]
         cliente["cliente.py"]
+        linea_factura["linea_factura.py"]
+    end
+
+    subgraph crud
+        operaciones["operaciones.py"]
+    end
+
+    subgraph ui
+        cli["cli.py"]
     end
 
     subgraph tests
         test_producto_control["test_producto_control.py"]
         test_antibiotico["test_antibiotico.py"]
         test_factura_cliente["test_factura_cliente.py"]
+        test_crud["test_crud.py"]
     end
 
     producto_control --> producto
@@ -21,6 +31,15 @@ graph LR
     factura --> producto
     factura --> antibiotico
     cliente --> factura
+    linea_factura --> producto
+
+    operaciones --> cliente
+    operaciones --> factura
+    operaciones --> linea_factura
+
+    cli --> operaciones
+    cli --> factura
+    cli --> cliente
 
     test_producto_control --> producto_control
     test_producto_control --> control_plagas
@@ -28,3 +47,4 @@ graph LR
     test_antibiotico --> antibiotico
     test_factura_cliente --> factura
     test_factura_cliente --> cliente
+    test_crud --> operaciones
